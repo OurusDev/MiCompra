@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#167348">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Mi Compra">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icon.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./overrides.css">
+  <title>Mi Compra</title>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="topbar">
+      <div><div class="brand"><span class="brand-mark">m</span><span>Mi Compra</span></div><div class="status"><i></i><span id="purchase-status">Compra activa</span></div></div>
+      <button id="history-button" class="icon-button" aria-label="Historial" title="Historial">◷</button>
+    </header>
+
+    <section class="total-card" aria-label="Total de compra">
+      <div class="eyebrow">TOTAL ACUMULADO</div>
+      <output id="purchase-total" class="total">$ 0,00</output>
+      <div class="total-footer"><span id="product-count">0 productos</span><button id="finish-button" class="text-button">Finalizar compra</button></div>
+    </section>
+
+    <section class="list-section">
+      <div class="section-heading"><h1>Tu compra</h1><button id="new-purchase-button" class="small-button" hidden>+ Nueva</button></div>
+      <div id="products" class="products"></div>
+      <div id="empty-state" class="empty-state"><span class="empty-icon">▤</span><strong>Tu lista está vacía</strong><span>Escaneá una etiqueta para empezar.</span></div>
+    </section>
+
+    <button id="scan-button" class="scan-button"><span class="camera-icon">◎</span><span>Escanear producto</span><span class="plus-icon">+</span></button>
+    <button id="manual-scan-button" class="manual-scan-button">Ingresar producto manualmente</button>
+    <input id="photo-input" type="file" accept="image/*" capture="environment" hidden>
+    <div class="offline-note"><span class="offline-dot"></span><span id="connection-label">Tus datos se guardan en este iPhone</span></div>
+  </main>
+
+  <dialog id="review-dialog" class="sheet-dialog">
+    <form method="dialog" class="sheet" id="review-form">
+      <div class="sheet-handle"></div>
+      <div class="sheet-heading"><div><div class="eyebrow">REVISIÓN</div><h2 id="review-title">Confirmar producto</h2></div><button class="icon-button close-button" value="cancel" aria-label="Cerrar">×</button></div>
+      <img id="preview" class="preview" alt="Foto de la etiqueta" hidden>
+      <div id="ocr-message" class="message" hidden></div>
+      <label>Nombre del producto<input id="product-name" autocomplete="off" placeholder="Ej. Leche entera 1 litro" required></label>
+      <div class="field-row">
+        <label>Precio unitario<input id="product-price" inputmode="decimal" placeholder="$ 0,00" required></label>
+        <label>Cantidad<input id="product-quantity" inputmode="decimal" value="1" required></label>
+      </div>
+      <label>Unidad <span class="optional">opcional</span><input id="product-unit" autocomplete="off" placeholder="kg, litro, unidad…"></label>
+      <div id="price-candidates" class="candidates" hidden><div class="candidate-heading">Precios detectados · elegí el correcto</div><div id="candidate-list"></div></div>
+      <div class="subtotal-line"><span>Subtotal</span><strong id="product-subtotal">$ 0,00</strong></div>
+      <button id="save-product" class="primary-button" type="button">Agregar a la compra</button>
+      <button id="manual-entry" class="quiet-button" type="button" hidden>Completar manualmente</button>
+    </form>
+  </dialog>
+
+  <dialog id="history-dialog" class="sheet-dialog history-dialog">
+    <section class="sheet">
+      <div class="sheet-handle"></div><div class="sheet-heading"><div><div class="eyebrow">MI COMPRA</div><h2>Historial</h2></div><button id="close-history" class="icon-button close-button" aria-label="Cerrar">×</button></div>
+      <div id="history-list" class="history-list"></div>
+    </section>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="./vendor/tesseract.min.js"></script>
+  <script src="./parser.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "Mi Compra",
+  "short_name": "Mi Compra",
+  "description": "Registrá lo que vas comprando con la cámara de tu iPhone.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f7f5",
+  "theme_color": "#167348",
+  "orientation": "portrait",
+  "icons": [{"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
